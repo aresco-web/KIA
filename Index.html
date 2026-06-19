@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최강기아 타이거즈 팬 스페이스 | V12</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Google Fonts (Inter & Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kiaRed: '#C70125',
+                        kiaDark: '#0A0A0B',
+                        kiaGray: '#1A1A1C',
+                        kiaGold: '#E2B231',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom glow effects and scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C70125;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E2B231;
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(199, 1, 37, 0.6);
+        }
+        .gold-glow {
+            text-shadow: 0 0 12px rgba(226, 178, 49, 0.8);
+        }
+        .card-perspective {
+            perspective: 1000px;
+        }
+        /* Gradient animations */
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-move 6s ease infinite;
+        }
+    </style>
+</head>
+<body class="bg-kiaDark text-gray-100 font-sans selection:bg-kiaRed selection:text-white overflow-x-hidden">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-kiaDark/90 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <svg class="w-10 h-10 text-kiaRed fill-current transition-transform duration-300 hover:scale-110" viewBox="0 0 100 100">
+                        <path d="M50 5C25.1 5 5 25.1 5 50s20.1 45 45 45 45-20.1 45-45S74.9 5 50 5zm20 35c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-40 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm20 33c-11 0-20-9-20-20h40c0 11-9 20-20 20z" />
+                        <path d="M50 15c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zM32 28c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm36 0c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4z" opacity="0.8"/>
+                    </svg>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-wider text-white">KIA <span class="text-kiaRed">TIGERS</span></span>
+                        <span class="block text-[9px] text-kiaGold font-bold tracking-widest uppercase">Fan Space V12</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-300 hover:text-kiaRed font-medium text-sm transition-colors duration-200">팬 소개</a>
+                    <a href="#players" class="text-gray-300 hover:text-kiaRed font-medium text-sm transition-colors duration-200">주요 선수</a>
+                    <a href="#ai-tactics" class="text-kiaGold hover:text-white font-extrabold text-sm transition-colors duration-200 flex items-center gap-1.5">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kiaGold opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-kiaGold"></span>
+                        </span>AI 전술실
+                    </a>
+                    <a href="#cheer" class="text-gray-300 hover:text-kiaRed font-medium text-sm transition-colors duration-200">응원 보드</a>
+                    <a href="#quiz" class="text-gray-300 hover:text-kiaRed font-medium text-sm transition-colors duration-200">팬력 테스트</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-kiaGray border-b border-white/10 px-4 pt-2 pb-4 space-y-3">
+            <a href="#about" class="block text-gray-300 hover:text-kiaRed font-medium py-2 text-base" onclick="toggleMenu()">팬 소개</a>
+            <a href="#players" class="block text-gray-300 hover:text-kiaRed font-medium py-2 text-base" onclick="toggleMenu()">주요 선수</a>
+            <a href="#ai-tactics" class="block text-kiaGold hover:text-white font-bold py-2 text-base" onclick="toggleMenu()">AI 전술실</a>
+            <a href="#cheer" class="block text-gray-300 hover:text-kiaRed font-medium py-2 text-base" onclick="toggleMenu()">응원 보드</a>
+            <a href="#quiz" class="block text-gray-300 hover:text-kiaRed font-medium py-2 text-base" onclick="toggleMenu()">팬력 테스트</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="about" class="relative min-h-screen flex items-center justify-center bg-cover bg-center overflow-hidden pt-16">
+        <!-- Animated overlay background -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-kiaDark/90 to-kiaDark z-10"></div>
+        
+        <!-- Decorative background elements -->
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-kiaRed/10 rounded-full filter blur-[100px]"></div>
+        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-kiaGold/10 rounded-full filter blur-[100px]"></div>
+
+        <div class="relative z-20 max-w-5xl mx-auto px-4 text-center mt-8 sm:mt-0">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6">
+                <span class="w-2.5 h-2.5 rounded-full bg-kiaRed animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-semibold text-kiaGold uppercase tracking-widest">KBO 리그 역대 최다 우승 명문 구단</span>
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-6">
+                <span class="block text-white">THE CHAMPIONS</span>
+                <span class="block mt-2 bg-gradient-to-r from-kiaRed via-kiaGold to-red-500 bg-clip-text text-transparent animate-gradient">KIA TIGERS</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-base sm:text-xl text-gray-400 mb-8 font-light leading-relaxed">
+                붉은 열정과 투혼의 역사! 통산 12회 한국시리즈 불패 신화!<br class="hidden sm:inline">
+                최강 기아 타이거즈를 사랑하는 야구팬의 열정이 가득 담긴 특별한 공간입니다.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#cheer" class="w-full sm:w-auto px-8 py-4 bg-kiaRed hover:bg-red-700 text-white font-extrabold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-kiaRed/30 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bullhorn"></i> 함께 응원하기
+                </a>
+                <a href="#players" class="w-full sm:w-auto px-8 py-4 bg-kiaGray hover:bg-zinc-800 text-white border border-white/10 font-bold rounded-xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+                    주요 타이거즈 영웅들 <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-3 gap-4 max-w-3xl mx-auto mt-16 p-6 rounded-2xl bg-kiaGray/50 border border-white/5 backdrop-blur-sm">
+                <div class="text-center">
+                    <p class="text-3xl sm:text-4xl font-black text-kiaRed text-glow">12회</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-1 font-medium">KS 최다 우승</p>
+                </div>
+                <div class="text-center border-x border-white/10">
+                    <p class="text-3xl sm:text-4xl font-black text-kiaGold gold-glow">0번</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-1 font-medium">한국시리즈 준우승 비율(0%)</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl sm:text-4xl font-black text-white">1983</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-1 font-medium">해태 타이거즈 첫 우승</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- AI TACTICS ROOM SECTION -->
+    <section id="ai-tactics" class="py-24 bg-gradient-to-b from-kiaDark via-kiaGray/40 to-kiaDark relative overflow-hidden border-t border-white/5">
+        <!-- Ambient grid patterns -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(199,1,37,0.06),transparent_50%)]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-xs sm:text-sm font-extrabold text-kiaGold uppercase tracking-widest bg-kiaRed/20 px-4 py-1.5 rounded-full">실시간 스마트 타이거즈 분석실</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mt-4 uppercase">
+                    AI <span class="text-kiaRed">TACTICS ROOM</span>
+                </h2>
+                <div class="w-16 h-1.5 bg-kiaRed mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base">Gemini API와 구글 검색을 결합하여, 실시간 전술 분석과 독창적인 응원 문구를 만듭니다.</p>
+            </div>
+
+            <!-- AI Tools Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto">
+                
+                <!-- 1. AI Realtime Tigers Analyst (Left 7-col) -->
+                <div class="lg:col-span-7 bg-kiaGray/90 rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative">
+                    <div>
+                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-kiaRed/20 flex items-center justify-center text-kiaRed border border-kiaRed/30">
+                                    <i class="fa-solid fa-robot text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-lg text-white">AI 타이거즈 전술대화방</h3>
+                                    <p class="text-[11px] text-kiaGold font-medium">Google Search Grounding 활성화</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-500/10 text-green-400 text-[10px] font-semibold rounded-full border border-green-500/20">실시간 연동</span>
+                        </div>
+
+                        <!-- Chat output window -->
+                        <div id="ai-chat-output" class="space-y-4 max-h-[340px] overflow-y-auto pr-2 mb-6 min-h-[180px] flex flex-col justify-end">
+                            <div class="bg-kiaDark/60 p-4 rounded-2xl border border-white/5">
+                                <p class="text-xs text-kiaGold font-bold mb-1">🐯 AI 호랑이 매니저</p>
+                                <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                    어흥! 반갑습니다 기아 타이거즈 팬 여러분! 저는 실시간 기아 전술과 데이터, 일정, 역사까지 구글 검색으로 꼼꼼히 탐색해 알려주는 인공지능 호랑이입니다. 무엇이든 질문해보세요!
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sample Tags -->
+                        <div class="mb-4">
+                            <p class="text-[11px] text-gray-500 mb-2 font-semibold">⚡ 이런 주제로 질문하면 완벽해요:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="setChatQuery('최근 기아 타이거즈 KBO 순위와 경기 결과 요약해줘')" class="text-[11px] bg-white/5 hover:bg-kiaRed/20 border border-white/5 hover:border-kiaRed/40 text-gray-300 px-3 py-1.5 rounded-lg transition duration-200">
+                                    📊 최근 KIA 순위 & 결과
+                                </button>
+                                <button onclick="setChatQuery('김도영 선수의 이번 시즌 하이라이트와 기록 알려줘')" class="text-[11px] bg-white/5 hover:bg-kiaRed/20 border border-white/5 hover:border-kiaRed/40 text-gray-300 px-3 py-1.5 rounded-lg transition duration-200">
+                                    🔥 김도영 최신 성적
+                                </button>
+                                <button onclick="setChatQuery('기아 타이거즈의 다음 경기 일정과 선발 라인업 분석해줘')" class="text-[11px] bg-white/5 hover:bg-kiaRed/20 border border-white/5 hover:border-kiaRed/40 text-gray-300 px-3 py-1.5 rounded-lg transition duration-200">
+                                    🗓️ 다음 경기 전술 분석
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input form -->
+                    <div class="relative mt-2">
+                        <input type="text" id="ai-chat-input" placeholder="예: 양현종 투수의 역사적인 대기록을 알려줘" class="w-full pl-4 pr-12 py-3.5 bg-kiaDark border border-white/10 rounded-2xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-kiaRed transition duration-200">
+                        <button onclick="submitChatToAI()" id="ai-chat-btn" class="absolute right-2.5 top-2.5 w-9 h-9 bg-kiaRed hover:bg-red-700 text-white rounded-xl flex items-center justify-center transition duration-200">
+                            <i id="ai-chat-icon" class="fa-solid fa-paper-plane text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. AI Slogan Maker (Right 5-col) -->
+                <div class="lg:col-span-5 bg-kiaGray/90 rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative">
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                            <div class="w-10 h-10 rounded-xl bg-kiaGold/20 flex items-center justify-center text-kiaGold border border-kiaGold/30">
+                                <i class="fa-solid fa-pen-fancy text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-lg text-white">AI 맞춤형 응원 제너레이터</h3>
+                                <p class="text-[11px] text-gray-500">선수 맞춤형 캐치프레이즈 & 삼행시 생성</p>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-400 mb-1.5">응원할 선수 이름 또는 메시지 키워드</label>
+                                <input type="text" id="slogan-target" placeholder="예: 김도영, 양현종, 최강기아" class="w-full px-4 py-2.5 bg-kiaDark border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-kiaRed transition duration-200">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-400 mb-1.5">응원 스타일 (톤앤매너)</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setSloganStyle('passionate')" id="style-passionate" class="slogan-style-btn py-2 text-[11px] font-bold rounded-lg border bg-kiaRed border-kiaRed text-white transition-all duration-200">🔥 열정 100%</button>
+                                    <button onclick="setSloganStyle('witty')" id="style-witty" class="slogan-style-btn py-2 text-[11px] font-bold rounded-lg border border-white/10 bg-kiaDark text-gray-400 hover:text-white transition-all duration-200">⚡ 유머 가득</button>
+                                    <button onclick="setSloganStyle('poetic')" id="style-poetic" class="slogan-style-btn py-2 text-[11px] font-bold rounded-lg border border-white/10 bg-kiaDark text-gray-400 hover:text-white transition-all duration-200">✍️ 시적 감성</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generate output area -->
+                    <div id="slogan-output-box" class="bg-kiaDark/60 p-4 rounded-2xl border border-white/5 min-h-[140px] flex flex-col justify-center text-center relative mb-4">
+                        <div id="slogan-placeholder" class="text-xs text-gray-500">
+                            <i class="fa-solid fa-wand-magic-sparkles text-xl text-kiaGold mb-2 block"></i>
+                            상단의 옵션을 설정하고<br>아래 [AI 응원 만들기] 버튼을 클릭하세요!
+                        </div>
+                        <div id="slogan-result" class="hidden text-left text-xs sm:text-sm text-gray-200 leading-relaxed font-medium"></div>
+                    </div>
+
+                    <!-- Run button -->
+                    <button onclick="generateAISlogan()" id="ai-slogan-btn" class="w-full py-3.5 bg-kiaGold hover:bg-yellow-600 text-black font-extrabold rounded-2xl transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 text-xs shadow-lg shadow-kiaGold/10">
+                        <i class="fa-solid fa-sparkles"></i> AI 타이거즈 응원구호 작명하기
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PLAYERS SECTION -->
+    <section id="players" class="py-24 bg-kiaGray relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs sm:text-sm font-extrabold text-kiaGold uppercase tracking-widest bg-kiaRed/20 px-4 py-1.5 rounded-full">타이거즈 히어로즈</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mt-4 uppercase">
+                    KEY <span class="text-kiaRed">PLAYERS</span>
+                </h2>
+                <div class="w-16 h-1.5 bg-kiaRed mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base">현재 기아 타이거즈의 상징이자 영광을 이끌어가는 주역들입니다.</p>
+            </div>
+
+            <!-- Player Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Player 1: Kim Do-yeong -->
+                <div class="group bg-kiaDark rounded-3xl overflow-hidden border border-white/10 hover:border-kiaRed/40 transition duration-300 shadow-2xl relative">
+                    <!-- Subtle Accent Overlay -->
+                    <div class="absolute top-0 right-0 p-4">
+                        <span class="text-5xl font-black text-white/5 tracking-wider">No.5</span>
+                    </div>
+                    <!-- Player SVG Silhouette/Art Concept -->
+                    <div class="h-48 bg-gradient-to-br from-kiaRed to-red-950 flex items-center justify-center p-6 relative">
+                        <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center">
+                            <i class="fa-solid fa-baseball-bat-ball text-4xl text-white"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-6">
+                            <span class="px-2 py-1 text-[10px] font-bold bg-kiaGold text-black rounded-md uppercase">INF / 내야수</span>
+                        </div>
+                    </div>
+                    <!-- Player Info -->
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-white">김도영 <span class="text-sm font-semibold text-gray-400">Kim Do-yeong</span></h3>
+                        <p class="text-kiaGold font-bold text-xs mt-1">Superstar / 30-30 Club Member</p>
+                        
+                        <!-- stats list -->
+                        <div class="mt-6 pt-4 border-t border-white/10 space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">KBO 기록</span>
+                                <span class="font-bold text-gray-200">최연소 최단기간 30-30 클럽</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">주요 강점</span>
+                                <span class="font-bold text-gray-200">초인적인 주력 & 압도적 파워</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">닉네임</span>
+                                <span class="font-bold text-kiaRed">도영아 너 땜에 살어!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player 2: Yang Hyeon-jong -->
+                <div class="group bg-kiaDark rounded-3xl overflow-hidden border border-white/10 hover:border-kiaRed/40 transition duration-300 shadow-2xl relative">
+                    <div class="absolute top-0 right-0 p-4">
+                        <span class="text-5xl font-black text-white/5 tracking-wider">No.54</span>
+                    </div>
+                    <div class="h-48 bg-gradient-to-br from-zinc-800 to-kiaDark flex items-center justify-center p-6 relative">
+                        <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center">
+                            <i class="fa-solid fa-glove text-4xl text-white"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-6">
+                            <span class="px-2 py-1 text-[10px] font-bold bg-kiaRed text-white rounded-md uppercase">LHP / 좌완투수</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-white">양현종 <span class="text-sm font-semibold text-gray-400">Yang Hyeon-jong</span></h3>
+                        <p class="text-kiaGold font-bold text-xs mt-1">The Great Legend / 대투수</p>
+                        
+                        <div class="mt-6 pt-4 border-t border-white/10 space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">통산 타이틀</span>
+                                <span class="font-bold text-gray-200">역대 최다 선발승 및 선발 탈삼진</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">주요 강점</span>
+                                <span class="font-bold text-gray-200">노련한 완급 조절 & 완벽 이닝 이터</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">팬들의 신뢰</span>
+                                <span class="font-bold text-kiaRed">타이거즈는 영원히 양현종</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player 3: Choi Hyoung-woo -->
+                <div class="group bg-kiaDark rounded-3xl overflow-hidden border border-white/10 hover:border-kiaRed/40 transition duration-300 shadow-2xl relative">
+                    <div class="absolute top-0 right-0 p-4">
+                        <span class="text-5xl font-black text-white/5 tracking-wider">No.34</span>
+                    </div>
+                    <div class="h-48 bg-gradient-to-br from-kiaGold/20 to-zinc-900 flex items-center justify-center p-6 relative">
+                        <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center">
+                            <i class="fa-solid fa-trophy text-4xl text-kiaGold"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-6">
+                            <span class="px-2 py-1 text-[10px] font-bold bg-zinc-700 text-white rounded-md uppercase">DH / 지명타자</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-white">최형우 <span class="text-sm font-semibold text-gray-400">Choi Hyoung-woo</span></h3>
+                        <p class="text-kiaGold font-bold text-xs mt-1">The Resolve / 해결사</p>
+                        
+                        <div class="mt-6 pt-4 border-t border-white/10 space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">KBO 대기록</span>
+                                <span class="font-bold text-gray-200">통산 최다 타점 타이틀 보유</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">주요 강점</span>
+                                <span class="font-bold text-gray-200">클러치 순간의 엄청난 해결 능력</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">별명</span>
+                                <span class="font-bold text-kiaRed">에이징 커브 파괴자</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE CHEER ZONE -->
+    <section id="cheer" class="py-24 bg-kiaDark relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-kiaDark via-kiaRed/5 to-kiaDark"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-xs sm:text-sm font-extrabold text-kiaGold uppercase tracking-widest bg-kiaRed/20 px-4 py-1.5 rounded-full">사운드 플레이</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mt-4 uppercase">
+                    CHEER <span class="text-kiaRed">SOUNDBOARD</span>
+                </h2>
+                <div class="w-16 h-1.5 bg-kiaRed mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base">볼륨을 켜고 응원단 리듬을 연주해보세요! 챔피언스 필드의 열기를 전해드립니다.</p>
+            </div>
+
+            <!-- Sound Board Interface -->
+            <div class="max-w-3xl mx-auto p-8 rounded-3xl bg-kiaGray/80 border border-white/10 backdrop-blur-md">
+                <div class="text-center mb-8">
+                    <p class="text-sm text-gray-400 mb-2">원하는 비트/응원 버튼을 클릭해 웅장한 가상 타악기 응원을 만드세요.</p>
+                    <div class="inline-flex gap-2 items-center bg-white/5 rounded-full p-1 border border-white/5">
+                        <button onclick="playCustomCheerBeat()" class="px-5 py-2 rounded-full bg-kiaRed hover:bg-red-700 text-white font-bold text-xs transition duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> 자동 응원 박수 리듬 (최강기아!)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Instrument Pads Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <!-- Pad 1 -->
+                    <button onclick="triggerSound('kick')" class="p-6 bg-kiaDark/80 hover:bg-kiaRed/20 rounded-2xl border border-white/10 hover:border-kiaRed/50 transition-all duration-200 text-center flex flex-col items-center gap-2 group">
+                        <i class="fa-solid fa-drum text-3xl text-kiaGold group-hover:scale-110 transition duration-200"></i>
+                        <span class="text-sm font-bold text-white mt-1">대북 (베이스)</span>
+                        <span class="text-[10px] text-gray-500">깊고 웅장한 기아의 울림</span>
+                    </button>
+                    <!-- Pad 2 -->
+                    <button onclick="triggerSound('snare')" class="p-6 bg-kiaDark/80 hover:bg-kiaRed/20 rounded-2xl border border-white/10 hover:border-kiaRed/50 transition-all duration-200 text-center flex flex-col items-center gap-2 group">
+                        <i class="fa-solid fa-drum text-3xl text-gray-300 group-hover:scale-110 transition duration-200"></i>
+                        <span class="text-sm font-bold text-white mt-1">스네어 (응원고수)</span>
+                        <span class="text-[10px] text-gray-500">경쾌한 경기 템포 비트</span>
+                    </button>
+                    <!-- Pad 3 -->
+                    <button onclick="triggerSound('clap')" class="p-6 bg-kiaDark/80 hover:bg-kiaRed/20 rounded-2xl border border-white/10 hover:border-kiaRed/50 transition-all duration-200 text-center flex flex-col items-center gap-2 group">
+                        <i class="fa-solid fa-hands-clapping text-3xl text-kiaRed group-hover:scale-110 transition duration-200"></i>
+                        <span class="text-sm font-bold text-white mt-1">짝짜꿍 (클랩)</span>
+                        <span class="text-[10px] text-gray-500">만 오천 관중의 함성박수</span>
+                    </button>
+                    <!-- Pad 4 -->
+                    <button onclick="triggerSound('bell')" class="p-6 bg-kiaDark/80 hover:bg-kiaRed/20 rounded-2xl border border-white/10 hover:border-kiaRed/50 transition-all duration-200 text-center flex flex-col items-center gap-2 group">
+                        <i class="fa-solid fa-bell text-3xl text-kiaGold group-hover:scale-110 transition duration-200"></i>
+                        <span class="text-sm font-bold text-white mt-1">승리의 종 (벨)</span>
+                        <span class="text-[10px] text-gray-500">기아 챔피언 홈런 신호</span>
+                    </button>
+                </div>
+                
+                <p class="text-[11px] text-center text-gray-500 mt-6"><i class="fa-solid fa-circle-info"></i> Web Audio API 기술을 탑재하여 브라우저에서 직접 악기음을 합성해 송출합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAN GUESTBOOK / CHEER BOARD -->
+    <section class="py-24 bg-kiaGray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs sm:text-sm font-extrabold text-kiaGold uppercase tracking-widest bg-kiaRed/20 px-4 py-1.5 rounded-full">팬 소통의 공간</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mt-4 uppercase">
+                    CHEERING <span class="text-kiaRed">BOARD</span>
+                </h2>
+                <div class="w-16 h-1.5 bg-kiaRed mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base">기아 타이거즈를 응원하는 한 줄 소감을 자유롭게 남겨보세요!</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto">
+                <!-- Submit Form -->
+                <div class="lg:col-span-4 bg-kiaDark p-8 rounded-3xl border border-white/10 shadow-xl h-fit">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-nib text-kiaRed"></i> 응원 한마디 등록
+                    </h3>
+                    <form id="cheer-form" onsubmit="handleCheerSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1">닉네임</label>
+                            <input type="text" id="cheer-author" required placeholder="예: 호랑이최강팬" class="w-full px-4 py-3 bg-kiaGray border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-kiaRed transition duration-200 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1">응원 메시지</label>
+                            <textarea id="cheer-message" required rows="3" placeholder="예: 올해도 V13 통합우승 기아 타이거즈 아자아자!" class="w-full px-4 py-3 bg-kiaGray border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-kiaRed transition duration-200 text-sm resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-kiaRed hover:bg-red-700 text-white font-extrabold rounded-xl transition-all duration-200 hover:scale-102 flex items-center justify-center gap-2 text-sm shadow-lg shadow-kiaRed/20">
+                            <i class="fa-solid fa-paper-plane"></i> 방명록 남기기
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Messages Wall -->
+                <div class="lg:col-span-8 flex flex-col justify-between">
+                    <div id="cheer-wall" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[420px] overflow-y-auto pr-2">
+                        <!-- Messages dynamically added here -->
+                    </div>
+                    
+                    <div class="mt-4 flex justify-between items-center text-xs text-gray-500">
+                        <span>현재 실시간 응원 메시지 보드</span>
+                        <button onclick="clearCheers()" class="text-gray-400 hover:text-kiaRed transition duration-200">
+                            <i class="fa-solid fa-trash-can"></i> 전체 초기화
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ GAME SECTION -->
+    <section id="quiz" class="py-24 bg-kiaDark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs sm:text-sm font-extrabold text-kiaGold uppercase tracking-widest bg-kiaRed/20 px-4 py-1.5 rounded-full">타이거즈 팬력 측정</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mt-4 uppercase">
+                    TIGERS <span class="text-kiaRed">FAN QUIZ</span>
+                </h2>
+                <div class="w-16 h-1.5 bg-kiaRed mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base">기아 타이거즈에 대해 얼마나 잘 아시나요? 재미있는 모의고사 3문항!</p>
+            </div>
+
+            <!-- Quiz Play Box -->
+            <div class="max-w-2xl mx-auto bg-kiaGray p-8 rounded-3xl border border-white/10 shadow-2xl">
+                <!-- Quiz Step container -->
+                <div id="quiz-container">
+                    <!-- Dynamic Quiz HTML injected here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-kiaDark border-t border-white/5 py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <!-- Brand Logo bottom -->
+            <div class="inline-flex items-center space-x-2 mb-6">
+                <svg class="w-8 h-8 text-kiaRed fill-current" viewBox="0 0 100 100">
+                    <path d="M50 5C25.1 5 5 25.1 5 50s20.1 45 45 45 45-20.1 45-45S74.9 5 50 5zm20 35c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-40 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm20 33c-11 0-20-9-20-20h40c0 11-9 20-20 20z" />
+                </svg>
+                <span class="font-extrabold text-lg text-white">KIA <span class="text-kiaRed">TIGERS</span> FAN PAGE</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-gray-500 max-w-lg mx-auto leading-relaxed">
+                본 웹사이트는 기아 타이거즈 야구단을 진심으로 애정하는 팬이 구축한 비상업적 전용 팬 페이지입니다.
+            </p>
+            
+            <div class="flex items-center justify-center gap-6 mt-6">
+                <a href="https://tigers.co.kr" target="_blank" class="text-xs text-gray-400 hover:text-kiaGold transition duration-200">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 기아 타이거즈 공식 홈페이지
+                </a>
+                <span class="text-gray-700">|</span>
+                <span class="text-xs text-gray-400">© 2026 KIA Tigers Fan Space. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS FOR SOUNDBOARD, LOCALSTORAGE GUESTBOOK, AI INTEGRATION, AND QUIZ -->
+    <script>
+        // Toggle Mobile Navigation Drawer
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        function toggleMenu() {
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        /* WEB AUDIO API - Synth Sounds for Interactive Drum Machine */
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Trigger Synth Instrument Sound Effects
+        function triggerSound(type) {
+            try {
+                const ctx = getAudioContext();
+                const now = ctx.currentTime;
+
+                if (type === 'kick') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.exponentialRampToValueAtTime(0.01, now + 0.3);
+
+                    gain.gain.setValueAtTime(1.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+
+                } else if (type === 'snare') {
+                    const bufferSize = ctx.sampleRate * 0.15;
+                    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+
+                    const noise = ctx.createBufferSource();
+                    noise.buffer = buffer;
+
+                    const filter = ctx.createBiquadFilter();
+                    filter.type = 'highpass';
+                    filter.frequency.setValueAtTime(1000, now);
+
+                    const gain = ctx.createGain();
+                    gain.gain.setValueAtTime(0.5, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+
+                    noise.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    noise.start(now);
+                    noise.stop(now + 0.15);
+
+                } else if (type === 'clap') {
+                    const playClapBurst = (delay) => {
+                        const bufferSize = ctx.sampleRate * 0.04;
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                        const data = buffer.getChannelData(0);
+                        for (let i = 0; i < bufferSize; i++) {
+                            data[i] = Math.random() * 2 - 1;
+                        }
+
+                        const noise = ctx.createBufferSource();
+                        noise.buffer = buffer;
+
+                        const bandpass = ctx.createBiquadFilter();
+                        bandpass.type = 'bandpass';
+                        bandpass.frequency.setValueAtTime(1200, now + delay);
+
+                        const gain = ctx.createGain();
+                        gain.gain.setValueAtTime(0.4, now + delay);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + delay + 0.04);
+
+                        noise.connect(bandpass);
+                        bandpass.connect(gain);
+                        gain.connect(ctx.destination);
+
+                        noise.start(now + delay);
+                        noise.stop(now + delay + 0.04);
+                    };
+
+                    playClapBurst(0);
+                    playClapBurst(0.015);
+                    playClapBurst(0.03);
+
+                } else if (type === 'bell') {
+                    const osc1 = ctx.createOscillator();
+                    const osc2 = ctx.createOscillator();
+                    const gain = ctx.createGain();
+
+                    osc1.type = 'triangle';
+                    osc1.frequency.setValueAtTime(880, now);
+
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(1200, now);
+
+                    gain.gain.setValueAtTime(0.4, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc1.start(now);
+                    osc2.start(now);
+                    osc1.stop(now + 0.8);
+                    osc2.stop(now + 0.8);
+                }
+            } catch (err) {
+                console.log("Audio activation requires user gesture interaction.", err);
+            }
+        }
+
+        // Automatic iconic cheering pattern "짝짝-짝-짝짝! 최강기아!"
+        function playCustomCheerBeat() {
+            getAudioContext();
+            const timings = [0, 0.25, 0.6, 0.85, 1.1];
+            
+            timings.forEach((t) => {
+                setTimeout(() => {
+                    triggerSound('clap');
+                }, t * 1000);
+            });
+
+            setTimeout(() => {
+                triggerSound('bell');
+                triggerSound('kick');
+            }, 1450);
+        }
+
+        /* GUESTBOOK / CHEER BOARD LOGIC (LocalStorage Saved) */
+        const defaultCheers = [
+            { author: "KIA챔피언스", message: "2024 통합 우승은 역사의 증명입니다! V13 고고씽!", date: "2026-06-15" },
+            { author: "타이거즈전설", message: "양현종 대투수의 위대한 투구는 언제나 가슴속 깊이 감동으로 남습니다.", date: "2026-06-12" },
+            { author: "야구는기아처럼", message: "김도영 선수 진짜 영광을 이끌어갈 KBO 최고 천재인 듯! 응원합니다!", date: "2026-06-10" }
+        ];
+
+        function loadCheers() {
+            const saved = localStorage.getItem('kia_cheers');
+            return saved ? JSON.parse(saved) : defaultCheers;
+        }
+
+        function saveCheers(cheers) {
+            localStorage.setItem('kia_cheers', JSON.stringify(cheers));
+        }
+
+        function displayCheers() {
+            const cheerWall = document.getElementById('cheer-wall');
+            if (!cheerWall) return;
+            const cheers = loadCheers();
+            cheerWall.innerHTML = '';
+
+            cheers.forEach((c) => {
+                const item = document.createElement('div');
+                item.className = "p-5 bg-kiaDark rounded-2xl border border-white/5 shadow hover:border-kiaRed/30 transition-all duration-300 flex flex-col justify-between";
+                item.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-2 h-2 rounded-full bg-kiaRed"></span>
+                            <span class="font-extrabold text-sm text-white">${escapeHTML(c.author)}</span>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed">${escapeHTML(c.message)}</p>
+                    </div>
+                    <span class="text-[10px] text-gray-600 block mt-4 text-right">${c.date}</span>
+                `;
+                cheerWall.appendChild(item);
+            });
+        }
+
+        function handleCheerSubmit(event) {
+            event.preventDefault();
+            const authorInput = document.getElementById('cheer-author');
+            const messageInput = document.getElementById('cheer-message');
+
+            if (!authorInput || !messageInput) return;
+
+            const author = authorInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!author || !message) return;
+
+            const today = new Date().toISOString().split('T')[0];
+            const newCheer = { author, message, date: today };
+
+            const current = loadCheers();
+            current.unshift(newCheer);
+            saveCheers(current);
+
+            authorInput.value = '';
+            messageInput.value = '';
+
+            displayCheers();
+            triggerSound('bell');
+        }
+
+        function clearCheers() {
+            const confirmBox = document.createElement('div');
+            confirmBox.className = "fixed inset-0 flex items-center justify-center bg-black/80 z-50 p-4";
+            confirmBox.innerHTML = `
+                <div class="bg-kiaGray p-6 rounded-2xl border border-white/10 max-w-sm w-full text-center">
+                    <p class="text-white text-sm mb-4 font-bold">모든 응원 메시지를 삭제하고 초기화하시겠습니까?</p>
+                    <div class="flex justify-center gap-3">
+                        <button id="confirm-yes" class="px-4 py-2 bg-kiaRed hover:bg-red-700 text-xs font-bold text-white rounded-lg transition">확인</button>
+                        <button id="confirm-no" class="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-xs font-bold text-white rounded-lg transition">취소</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(confirmBox);
+
+            document.getElementById('confirm-yes').onclick = () => {
+                localStorage.removeItem('kia_cheers');
+                displayCheers();
+                confirmBox.remove();
+            };
+            document.getElementById('confirm-no').onclick = () => {
+                confirmBox.remove();
+            };
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        /* GEMINI API & AI TACTICS ROOM INTEGRATION */
+        let currentSloganStyle = 'passionate';
+
+        function setSloganStyle(style) {
+            currentSloganStyle = style;
+            document.querySelectorAll('.slogan-style-btn').forEach(btn => {
+                btn.className = "slogan-style-btn py-2 text-[11px] font-bold rounded-lg border border-white/10 bg-kiaDark text-gray-400 transition-all duration-200";
+            });
+            const selectedBtn = document.getElementById(`style-${style}`);
+            if (selectedBtn) {
+                if (style === 'passionate') {
+                    selectedBtn.className = "slogan-style-btn py-2 text-[11px] font-bold rounded-lg border bg-kiaRed border-kiaRed text-white transition-all duration-200";
+                } else if (style === 'witty') {
+                    selectedBtn.className = "slogan-style-btn py-2 text-[11px] font-bold rounded-lg border bg-amber-600 border-amber-600 text-white transition-all duration-200";
+                } else {
+                    selectedBtn.className = "slogan-style-btn py-2 text-[11px] font-bold rounded-lg border bg-zinc-700 border-zinc-700 text-white transition-all duration-200";
+                }
+            }
+        }
+
+        function setChatQuery(queryText) {
+            const input = document.getElementById('ai-chat-input');
+            if (input) input.value = queryText;
+        }
+
+        async function fetchGeminiLLM(userPrompt, systemPrompt = "", useSearch = false) {
+            const apiKey = ""; // Canvas framework environment injects empty key placeholders which function beautifully
+            const modelName = "gemini-2.5-flash";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }]
+            };
+
+            if (systemPrompt) {
+                payload.systemInstruction = {
+                    parts: [{ text: systemPrompt }]
+                };
+            }
+
+            if (useSearch) {
+                payload.tools = [{ "google_search": {} }];
+            }
+
+            let delay = 1000;
+            for (let i = 0; i < 4; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                        continue;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`Gemini API Request failed with status ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    return result;
+                } catch (error) {
+                    if (i === 3) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        async function submitChatToAI() {
+            const inputEl = document.getElementById('ai-chat-input');
+            if (!inputEl) return;
+            const userQuery = inputEl.value.trim();
+            if (!userQuery) return;
+
+            const chatOutput = document.getElementById('ai-chat-output');
+            const chatBtn = document.getElementById('ai-chat-btn');
+            const chatIcon = document.getElementById('ai-chat-icon');
+
+            if (!chatOutput || !chatBtn || !chatIcon) return;
+
+            // Show user message
+            const userDiv = document.createElement('div');
+            userDiv.className = "bg-kiaGray/50 p-4 rounded-2xl border border-white/10 text-right";
+            userDiv.innerHTML = `
+                <p class="text-xs text-kiaGold font-bold mb-1">🐯 나 (타이거즈 팬)</p>
+                <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">${escapeHTML(userQuery)}</p>
+            `;
+            chatOutput.appendChild(userDiv);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+
+            inputEl.value = "";
+            inputEl.disabled = true;
+            chatBtn.disabled = true;
+            chatIcon.className = "fa-solid fa-circle-notch animate-spin text-sm";
+
+            // Temporary loader
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = "bg-kiaDark/60 p-4 rounded-2xl border border-white/5 animate-pulse";
+            loaderDiv.id = "temp-ai-loader";
+            loaderDiv.innerHTML = `
+                <p class="text-xs text-kiaRed font-bold mb-1">🐯 AI 호랑이 분석기</p>
+                <p class="text-xs text-gray-400">데이터를 분석하고 정보를 검색하는 중입니다... 잠시만 기다려주세요!</p>
+            `;
+            chatOutput.appendChild(loaderDiv);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+
+            try {
+                const systemInstructions = `당신은 최강 기아 타이거즈 구단의 마스코트이자 똑똑하고 전문적인 야구 데이터 분석가 'AI 흑호'입니다.
+기아 타이거즈 팬들을 위해 전술, 일정, 현재 전력, 선수 성적 등에 대하여 친근하게 한국어로 설명해주세요.
+최신 정보가 포함될 경우, 구글 검색(Google Search) 결과를 바탕으로 사실에 기초해서 정교하게 분석해 주세요.
+답변 끝에는 위트있게 '어흥!', '최강기아 타이거즈 화이팅!' 혹은 '우승 기운이 솟아납니다!' 같은 유쾌하고 씩씩한 호랑이 멘트를 꼭 곁들여주세요.`;
+
+                const responseData = await fetchGeminiLLM(userQuery, systemInstructions, true);
+                
+                const loader = document.getElementById('temp-ai-loader');
+                if (loader) loader.remove();
+
+                const candidate = responseData.candidates?.[0];
+                let generatedText = "죄송합니다. 분석 결과를 가져오지 못했습니다. 다시 시도해주세요.";
+                let citationsHTML = "";
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    generatedText = candidate.content.parts[0].text;
+
+                    const metadata = candidate.groundingMetadata;
+                    if (metadata && metadata.groundingAttributions) {
+                        const uniqueSources = [];
+                        metadata.groundingAttributions.forEach(attr => {
+                            const title = attr.web?.title;
+                            const uri = attr.web?.uri;
+                            if (title && uri && !uniqueSources.some(s => s.uri === uri)) {
+                                uniqueSources.push({ title, uri });
+                            }
+                        });
+
+                        if (uniqueSources.length > 0) {
+                            citationsHTML = `
+                                <div class="mt-3 pt-3 border-t border-white/5 text-[10px] text-gray-500">
+                                    <span class="block font-semibold text-gray-400 mb-1"><i class="fa-solid fa-circle-info text-kiaGold"></i> 분석 근거 자료 출처:</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${uniqueSources.map(src => `
+                                            <a href="${src.uri}" target="_blank" class="bg-kiaGray px-2 py-1 rounded hover:text-kiaGold transition border border-white/5 truncate max-w-[200px] inline-block">
+                                                🔗 ${escapeHTML(src.title)}
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                }
+
+                const aiDiv = document.createElement('div');
+                aiDiv.className = "bg-kiaDark/80 p-5 rounded-2xl border border-white/5";
+                
+                const parsedContent = typeof marked !== 'undefined' ? marked.parse(generatedText) : generatedText.replace(/\n/g, '<br>');
+
+                aiDiv.innerHTML = `
+                    <p class="text-xs text-kiaRed font-bold mb-1">🐯 AI 호랑이 분석기</p>
+                    <div class="text-xs sm:text-sm text-gray-300 leading-relaxed prose prose-invert max-w-none prose-sm">
+                        ${parsedContent}
+                    </div>
+                    ${citationsHTML}
+                `;
+                chatOutput.appendChild(aiDiv);
+                triggerSound('bell');
+
+            } catch (error) {
+                console.error(error);
+                const loader = document.getElementById('temp-ai-loader');
+                if (loader) loader.remove();
+
+                const errDiv = document.createElement('div');
+                errDiv.className = "bg-red-950/40 p-4 rounded-2xl border border-red-500/20";
+                errDiv.innerHTML = `
+                    <p class="text-xs text-kiaRed font-bold mb-1">⚠️ 분석 오류 발생</p>
+                    <p class="text-xs text-gray-300">네트워크 지연 또는 임시 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.</p>
+                `;
+                chatOutput.appendChild(errDiv);
+                triggerSound('kick');
+            } finally {
+                inputEl.disabled = false;
+                chatBtn.disabled = false;
+                chatIcon.className = "fa-solid fa-paper-plane text-sm";
+                chatOutput.scrollTop = chatOutput.scrollHeight;
+            }
+        }
+
+        // Keydown handler
+        const aiChatInput = document.getElementById('ai-chat-input');
+        if (aiChatInput) {
+            aiChatInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    submitChatToAI();
+                }
+            });
+        }
+
+        // Slogan Generator
+        async function generateAISlogan() {
+            const targetInput = document.getElementById('slogan-target');
+            if (!targetInput) return;
+            const targetName = targetInput.value.trim() || "기아 타이거즈";
+            
+            const sloganBtn = document.getElementById('ai-slogan-btn');
+            const resultBox = document.getElementById('slogan-result');
+            const placeholder = document.getElementById('slogan-placeholder');
+
+            if (!sloganBtn || !resultBox || !placeholder) return;
+
+            sloganBtn.disabled = true;
+            sloganBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin text-sm"></i> 멋진 응원구호 작사 중...`;
+            
+            placeholder.classList.add('hidden');
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = `
+                <div class="flex flex-col items-center justify-center space-y-2">
+                    <span class="w-6 h-6 border-2 border-kiaGold border-t-transparent rounded-full animate-spin"></span>
+                    <span class="text-[11px] text-gray-400">타이거즈 소울을 담은 응원 문구를 조합하고 있습니다...</span>
+                </div>
+            `;
+
+            let styleKeyword = "뜨겁고 용맹하며 투혼이 번쩍이는 파이팅 스타일";
+            if (currentSloganStyle === 'witty') {
+                styleKeyword = "재치 있고 드립 가득하며 관중을 미소 짓게 만드는 재기발랄 스타일";
+            } else if (currentSloganStyle === 'poetic') {
+                styleKeyword = "가슴이 웅장해지고 감동적이며 한 편의 시처럼 서정적이고 묵직한 스타일";
+            }
+
+            const prompt = `기아 타이거즈의 대상 '${targetName}'를 응원하는 아주 독창적인 응원 문구와 삼행시(또는 구호)를 창작해주세요.
+스타일은 '${styleKeyword}'로 맞추어 작성해주세요. 
+결과물은 3가지 종류의 크리에이티브 시안으로 제안해주세요:
+1. 경기장 전광판용 임팩트 구호 (한 줄)
+2. 대상 이름을 활용한 센스 만점 삼행시(또는 이행시)
+3. 함성을 유도하는 서정적이거나 강렬한 슬로건
+
+각 항목을 정돈해 보기 편하게 출력해주세요.`;
+
+            const systemInstruction = "당신은 한국 최고의 야구 구단 기아 타이거즈의 전설적인 수석 응원단장이자 천재 카피라이터입니다.";
+
+            try {
+                const responseData = await fetchGeminiLLM(prompt, systemInstruction, false);
+                const text = responseData.candidates?.[0]?.content?.parts?.[0]?.text || "구호 생성 실패";
+                
+                const parsedSlogan = typeof marked !== 'undefined' ? marked.parse(text) : text.replace(/\n/g, '<br>');
+                resultBox.innerHTML = parsedSlogan;
+                triggerSound('bell');
+
+            } catch (error) {
+                console.error(error);
+                resultBox.innerHTML = `<span class="text-kiaRed font-bold text-center block">오류가 발생했습니다. 잠시 후 다시 응원 만들기를 클릭해 주세요!</span>`;
+                triggerSound('kick');
+            } finally {
+                sloganBtn.disabled = false;
+                sloganBtn.innerHTML = `<i class="fa-solid fa-sparkles"></i> AI 타이거즈 응원구호 작명하기`;
+            }
+        }
+
+        /* FAN QUIZ SYSTEM LOGIC */
+        const quizData = [
+            {
+                question: "1. KIA 타이거즈의 통산 한국시리즈 우승 횟수는 역대 몇 회일까요?",
+                options: ["9회", "10회", "11회", "12회"],
+                answer: 3, // 12회
+                explanation: "KIA 타이거즈는 전신 해태 시절을 포함하여 통산 12회 한국시리즈 진출 및 12회 전승 우승이라는 대기록을 보유하고 있습니다."
+            },
+            {
+                question: "2. 현재 기아 타이거즈가 사용하고 있는 홈구장의 공식 명칭은 무엇일까요?",
+                options: ["광주 무등야구장", "광주-기아 챔피언스 필드", "광주 타이거즈 아레나", "무등 챔피언스 돔"],
+                answer: 1, // 광주-기아 챔피언스 필드
+                explanation: "2014년에 완공되어 지금까지 기아의 수많은 명승부를 함께한 광주 홈구장의 명칭은 '광주-기아 챔피언스 필드'입니다."
+            },
+            {
+                question: "3. 2024시즌 KBO 역사상 최연소 최단기간 '30홈런-30도루'의 대기록을 달성한 스타는 누구일까요?",
+                options: ["최형우", "나성범", "김도영", "박찬호"],
+                answer: 2, // 김도영
+                explanation: "김도영 선수는 2024년 웅장한 활약을 보이며 최연소 최단기간 30-30 클럽 가입 및 정규시즌 MVP를 석권하는 기염을 토했습니다."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+
+            if (currentQuizIndex < quizData.length) {
+                const currentQuiz = quizData[currentQuizIndex];
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs bg-kiaRed/20 text-kiaRed px-3 py-1 rounded-full font-bold">문제 ${currentQuizIndex + 1} / ${quizData.length}</span>
+                            <span class="text-xs text-gray-400">현재 점수: ${score * 10}점</span>
+                        </div>
+                        <h4 class="text-lg font-black text-white leading-relaxed">${currentQuiz.question}</h4>
+                        
+                        <div class="space-y-3">
+                            ${currentQuiz.options.map((option, idx) => `
+                                <button onclick="selectQuizOption(${idx})" id="option-btn-${idx}" class="quiz-opt-btn w-full p-4 bg-kiaDark hover:bg-zinc-800 border border-white/5 rounded-xl text-left text-xs sm:text-sm font-medium transition duration-200 text-gray-300">
+                                    <span class="inline-block w-6 h-6 text-center leading-6 rounded-full bg-white/5 mr-3 text-xs text-gray-400">${idx + 1}</span>
+                                    ${option}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div id="quiz-explanation-box" class="hidden p-4 bg-kiaDark/60 rounded-xl border border-white/5 text-xs text-gray-300 leading-relaxed">
+                            <p id="quiz-result-header" class="font-extrabold text-sm mb-1"></p>
+                            <p id="quiz-expl-text"></p>
+                        </div>
+
+                        <button onclick="submitQuizAnswer()" id="quiz-action-btn" disabled class="w-full py-3.5 bg-kiaRed disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-700 text-white font-extrabold rounded-xl transition duration-200 text-xs sm:text-sm flex items-center justify-center gap-2">
+                            정답 확인하기
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Quiz completed state
+                let resultMessage = "기아 초보 팬이시군요! 함께 응원하며 타이거즈 영웅들에 대해 알아가 봅시다.";
+                let resultEmoji = "⚾";
+                if (score === 3) {
+                    resultMessage = "축하합니다! 당신은 뼛속까지 '최강기아'의 피가 흐르는 진짜 V12 호랑이 팬이십니다!";
+                    resultEmoji = "🐯🏆";
+                } else if (score >= 1) {
+                    resultMessage = "타이거즈를 열렬히 사랑하는 성실한 기아 팬이시군요! 우승 전설은 계속됩니다.";
+                    resultEmoji = "🦁";
+                }
+
+                container.innerHTML = `
+                    <div class="text-center py-6 space-y-6">
+                        <div class="text-6xl">${resultEmoji}</div>
+                        <h4 class="text-2xl font-black text-white">테스트 완료!</h4>
+                        <p class="text-lg font-bold text-kiaGold">당신의 타이거즈 팬력 점수: <span class="text-3xl font-black text-white text-glow">${score * 10}</span> / 30점</p>
+                        <p class="text-xs sm:text-sm text-gray-400 max-w-sm mx-auto leading-relaxed">${resultMessage}</p>
+                        
+                        <button onclick="resetQuiz()" class="px-8 py-3 bg-kiaRed hover:bg-red-700 text-white font-bold rounded-xl text-xs transition duration-200">
+                            처음부터 다시 풀기
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function selectQuizOption(index) {
+            selectedOption = index;
+            document.querySelectorAll('.quiz-opt-btn').forEach((btn, idx) => {
+                btn.className = "quiz-opt-btn w-full p-4 bg-kiaDark hover:bg-zinc-800 border border-white/5 rounded-xl text-left text-xs sm:text-sm font-medium transition duration-200 text-gray-300";
+            });
+            const selectedBtn = document.getElementById(`option-btn-${index}`);
+            if (selectedBtn) {
+                selectedBtn.className = "quiz-opt-btn w-full p-4 bg-kiaRed/10 border-kiaRed border rounded-xl text-left text-xs sm:text-sm font-medium transition duration-200 text-white";
+            }
+            const actionBtn = document.getElementById('quiz-action-btn');
+            if (actionBtn) {
+                actionBtn.removeAttribute('disabled');
+            }
+        }
+
+        function submitQuizAnswer() {
+            const currentQuiz = quizData[currentQuizIndex];
+            const actionBtn = document.getElementById('quiz-action-btn');
+            const explBox = document.getElementById('quiz-explanation-box');
+            const resHeader = document.getElementById('quiz-result-header');
+            const explText = document.getElementById('quiz-expl-text');
+
+            if (!actionBtn || !explBox || !resHeader || !explText) return;
+
+            // Highlight Correct / Incorrect choices
+            document.querySelectorAll('.quiz-opt-btn').forEach((btn, idx) => {
+                btn.setAttribute('disabled', 'true');
+                if (idx === currentQuiz.answer) {
+                    btn.className = "quiz-opt-btn w-full p-4 bg-green-950/40 border-green-500 border rounded-xl text-left text-xs sm:text-sm font-medium text-white";
+                } else if (idx === selectedOption) {
+                    btn.className = "quiz-opt-btn w-full p-4 bg-red-950/40 border-red-500 border rounded-xl text-left text-xs sm:text-sm font-medium text-white";
+                }
+            });
+
+            // Calculate score
+            const isCorrect = (selectedOption === currentQuiz.answer);
+            if (isCorrect) {
+                score++;
+                resHeader.className = "font-extrabold text-sm mb-1 text-green-400";
+                resHeader.innerHTML = "<i class='fa-solid fa-circle-check'></i> 정답입니다! 아주 명쾌하군요!";
+                triggerSound('bell');
+            } else {
+                resHeader.className = "font-extrabold text-sm mb-1 text-kiaRed";
+                resHeader.innerHTML = "<i class='fa-solid fa-circle-xmark'></i> 아쉽게도 오답입니다.";
+                triggerSound('kick');
+            }
+
+            explText.innerText = currentQuiz.explanation;
+            explBox.classList.remove('hidden');
+
+            // Toggle to Next Button
+            actionBtn.innerHTML = "다음 문제로 넘어가기";
+            actionBtn.setAttribute('onclick', 'goToNextQuizStep()');
+        }
+
+        function goToNextQuizStep() {
+            currentQuizIndex++;
+            selectedOption = null;
+            renderQuiz();
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            selectedOption = null;
+            renderQuiz();
+        }
+
+        /* WINDOW ONLOAD INITIALIZER */
+        window.onload = function() {
+            displayCheers();
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
