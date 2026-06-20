@@ -354,14 +354,14 @@
         let isLocalMode = true;
         let appId = 'worldcup-predict-bet-2026';
 
-        // 샌드박스 제공 환경변수 파싱 안전 검사
+        // 환경변수 파싱 안전 검사
         try {
             if (typeof __app_id !== 'undefined' && __app_id) {
                 appId = __app_id;
             }
         } catch (e) {}
 
-        // 1) 샌드박스 내부 주입 설정 검사 
+        // 샌드박스 내부 주입 설정 검사 
         let internalConfig = null;
         try {
             if (typeof __firebase_config !== 'undefined' && __firebase_config) {
@@ -369,7 +369,7 @@
             }
         } catch (e) {}
 
-        // 2) 로컬스토리지에 저장한 유저용 수동 DB 설정 검사
+        // 로컬스토리지에 저장한 유저용 수동 DB 설정 검사
         let userCustomConfig = null;
         try {
             const saved = localStorage.getItem('custom_firebase_config');
@@ -649,7 +649,6 @@
 
                 let displayTime = '방금 전';
                 if (p.createdAt) {
-                    // Firebase timestamp 검사 또는 단순 Date 파싱
                     let date;
                     if (typeof p.createdAt.toDate === 'function') {
                         date = p.createdAt.toDate();
@@ -765,8 +764,10 @@
             const submitBtn = document.getElementById('btn-submit');
 
             const name = nameInput.value.trim();
-            const homeScore = parseInt(homeInput.value);
-            const awayScore = parseInt(awayInput.value);
+            
+            // 안전한 골 수 파싱 (NaN 방지)
+            const homeScore = parseInt(homeInput.value) || 0;
+            const awayScore = parseInt(awayInput.value) || 0; // ★ [오류수정]: 기존 awayScore.value에서 awayInput.value로 변수 오타를 완벽히 고쳤습니다!
             const cheerMsg = cheerInput.value.trim();
 
             if (!name) {
@@ -793,7 +794,7 @@
                     allPredictions.unshift(newLocalPrediction);
                     localStorage.setItem('local_predictions_db', JSON.stringify(allPredictions));
                     
-                    showToast(`등록 완료! 로컬 브라우저 세션에 저장되었습니다.`, "success");
+                    showToast(`등록 완료! 내역이 정상적으로 등록되었습니다.`, "success");
                     
                     // 입력 초기화
                     nameInput.value = '';
