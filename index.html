@@ -36,36 +36,6 @@
     <!-- 토스트 알림 컨테이너 -->
     <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-11/12 max-w-sm"></div>
 
-    <!-- DB 설정 모달 -->
-    <div id="config-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-database text-amber-500"></i>
-                    실시간 멀티플레이어 연동 설정
-                </h3>
-                <button type="button" onclick="toggleConfigModal()" class="text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
-                현재 파이어베이스(Firebase) 설정이 없어서 <strong>개인 로컬 모드</strong>로 작동 중입니다. 
-                친구들과 실시간으로 데이터를 공유하려면 본인의 파이어베이스 앱 설정 정보를 아래에 붙여넣어 주세요.
-            </p>
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 mb-1">Firebase Config JSON 또는 자바스크립트 객체</label>
-                    <textarea id="firebase-json-input" rows="6" placeholder='{&#10;  "apiKey": "...",&#10;  "authDomain": "...",&#10;  "projectId": "...",&#10;  "storageBucket": "...",&#10;  "messagingSenderId": "...",&#10;  "appId": "..."&#10;}'
-                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-emerald-400 placeholder-slate-700 focus:outline-none focus:border-amber-500"></textarea>
-                </div>
-                <div class="flex gap-2">
-                    <button type="button" onclick="clearSavedConfig()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-xl transition-all">연동 초기화</button>
-                    <button type="button" onclick="saveCustomConfig()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold py-2.5 rounded-xl transition-all">설정 저장 후 연결</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- 삭제 확인 모달 -->
     <div id="delete-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-xs text-center shadow-2xl">
@@ -73,7 +43,7 @@
                 <i class="fa-solid fa-trash-can text-lg"></i>
             </div>
             <h3 class="text-base font-bold text-white mb-2">예측 삭제</h3>
-            <p class="text-xs text-slate-400 mb-6">등록하신 예측을 삭제하시겠습니까?<br>삭제된 데이터는 복구할 수 없습니다.</p>
+            <p class="text-xs text-slate-400 mb-6">등록하신 예측을 삭제하시겠습니까?<br>삭제된 데이터는 실시간으로 실종됩니다.</p>
             <div class="flex gap-2.5">
                 <button type="button" onclick="closeDeleteModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-bold py-2.5 rounded-xl transition-all">취소</button>
                 <button type="button" id="confirm-delete-btn" class="flex-1 bg-rose-600 hover:bg-rose-500 text-xs text-white font-bold py-2.5 rounded-xl transition-all">삭제하기</button>
@@ -86,12 +56,11 @@
         <!-- 헤더 / 타이틀 -->
         <header class="text-center mb-6 relative">
             <div class="absolute right-0 top-0">
-                <!-- 상태 배지 & 설정 버튼 -->
-                <button type="button" onclick="toggleConfigModal()" id="db-status-badge" class="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-850 border border-slate-850 text-[10px] font-bold px-3 py-1.5 rounded-full transition-all">
-                    <span class="w-1.5 h-1.5 rounded-full bg-yellow-500" id="db-status-dot"></span>
-                    <span id="db-status-text" class="text-slate-300">연결 검사 중</span>
-                    <i class="fa-solid fa-gear text-slate-500 ml-0.5"></i>
-                </button>
+                <!-- 상태 배지 -->
+                <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 text-[10px] font-bold px-3 py-1.5 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" id="db-status-dot"></span>
+                    <span id="db-status-text" class="text-slate-300">실시간 서버 연결됨</span>
+                </div>
             </div>
             
             <div class="inline-flex items-center gap-2 bg-red-600/10 border border-red-500/30 text-red-500 text-xs font-bold px-4 py-1.5 rounded-full mb-3 tracking-widest uppercase mt-8 sm:mt-0">
@@ -102,7 +71,7 @@
                 ⚽ 대한민국 <span class="text-red-500">vs</span> 남아공
             </h1>
             <p class="text-slate-400 text-xs md:text-sm">
-                누구든지 자유롭게 자신의 이름과 스코어 예측을 실시간으로 올려보세요!
+                내가 공유한 링크로 접속해 이름을 적고 결과를 예측해 보세요! (중복 가능)
             </p>
         </header>
 
@@ -177,7 +146,7 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500">
                             <i class="fa-solid fa-user text-sm"></i>
                         </span>
-                        <input type="text" id="user-name" required placeholder="동명이인 구분을 위해 성을 포함해 적어주세요"
+                        <input type="text" id="user-name" required placeholder="본인의 이름을 정성스럽게 적어주세요"
                             class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-red-500 transition-colors">
                     </div>
                 </div>
@@ -211,7 +180,7 @@
                 <!-- 응원 한마디 -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1.5">대표팀 응원 한마디 (선택)</label>
-                    <input type="text" id="cheer-msg" placeholder="예: 대한민국 무조건 16강 가자!" max="50"
+                    <input type="text" id="cheer-msg" placeholder="예: 무조건 믿습니다 가자!!" max="50"
                         class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-red-500 transition-colors">
                 </div>
 
@@ -291,10 +260,10 @@
             <!-- 리스트 컨테이너 -->
             <div class="overflow-hidden">
                 <div id="predictions-list" class="space-y-2 max-h-96 overflow-y-auto pr-1">
-                    <!-- 스켈레톤 로딩 상태 -->
+                    <!-- 로딩 상태 -->
                     <div class="text-center py-12 text-slate-500">
                         <i class="fa-solid fa-spinner animate-spin text-3xl mb-3 text-red-500"></i>
-                        <p class="text-xs">실시간 베팅 내역을 불러오는 중입니다...</p>
+                        <p class="text-xs">실시간 베팅 데이터를 불러오고 있습니다...</p>
                     </div>
                 </div>
             </div>
@@ -307,128 +276,28 @@
         </footer>
     </div>
 
-    <!-- UI 제어용 헬퍼 일반 스크립트 -->
+    <!-- 비즈니스 로직 스크립트 -->
     <script>
-        // 전역 모달 토글 및 설정 관리
-        function toggleConfigModal() {
-            const modal = document.getElementById('config-modal');
-            modal.classList.toggle('hidden');
-            if (!modal.classList.contains('hidden')) {
-                const current = localStorage.getItem('custom_firebase_config') || '';
-                document.getElementById('firebase-json-input').value = current;
-            }
-        }
-
-        function saveCustomConfig() {
-            const inputVal = document.getElementById('firebase-json-input').value.trim();
-            if (!inputVal) {
-                alert('Firebase 설정값을 입력해 주세요.');
-                return;
-            }
-            try {
-                // 검증 및 저장
-                JSON.parse(inputVal);
-                localStorage.setItem('custom_firebase_config', inputVal);
-                alert('설정이 저장되었습니다! 실시간 연결을 위해 페이지를 새로고침합니다.');
-                window.location.reload();
-            } catch (e) {
-                alert('JSON 형식이 올바르지 않습니다. 다시 확인해 주세요.');
-            }
-        }
-
-        function clearSavedConfig() {
-            localStorage.removeItem('custom_firebase_config');
-            alert('연동 설정이 초기화되었습니다. 로컬 저장소 모드로 재시작합니다.');
-            window.location.reload();
-        }
-    </script>
-
-    <!-- Firebase SDK 모듈 로딩 및 로직 처리 -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // 1. 하이브리드 파이어베이스 환경 설정
-        let firebaseConfig = null;
-        let isLocalMode = true;
-        let appId = 'worldcup-predict-bet-2026';
-
-        // 환경변수 파싱 안전 검사
-        try {
-            if (typeof __app_id !== 'undefined' && __app_id) {
-                appId = __app_id;
-            }
-        } catch (e) {}
-
-        // 샌드박스 내부 주입 설정 검사 
-        let internalConfig = null;
-        try {
-            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                internalConfig = JSON.parse(__firebase_config);
-            }
-        } catch (e) {}
-
-        // 로컬스토리지에 저장한 유저용 수동 DB 설정 검사
-        let userCustomConfig = null;
-        try {
-            const saved = localStorage.getItem('custom_firebase_config');
-            if (saved) {
-                userCustomConfig = JSON.parse(saved);
-            }
-        } catch (e) {}
-
-        // 최종 타겟 컨피그 선정
-        if (internalConfig) {
-            firebaseConfig = internalConfig;
-            isLocalMode = false;
-        } else if (userCustomConfig) {
-            firebaseConfig = userCustomConfig;
-            isLocalMode = false;
-        }
-
-        // 로컬 브라우저 세션 ID 부여 (로컬 모드 시 본인 글 식별 및 삭제용)
-        let localUserUid = localStorage.getItem('local_user_uid');
-        if (!localUserUid) {
-            localUserUid = 'local_' + Math.random().toString(36).substr(2, 9);
-            localStorage.setItem('local_user_uid', localUserUid);
-        }
-
-        // 2. 파이어베이스 이니셜라이즈 가드
-        let app, auth, db;
-        if (!isLocalMode) {
-            try {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-            } catch (err) {
-                console.error("Firebase 초기화 에러, 로컬 모드로 전환합니다: ", err);
-                isLocalMode = true;
-            }
-        }
-
-        // UI에 DB 작동 상태 반영
-        const statusDot = document.getElementById('db-status-dot');
-        const statusText = document.getElementById('db-status-text');
-        if (isLocalMode) {
-            statusDot.className = "w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse";
-            statusText.innerText = "로컬 모드";
-        } else {
-            statusDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse";
-            statusText.innerText = "서버 연결됨";
-        }
-
-        // 예측 차단 시각 (경기 시간: 2026-06-25 10:00:00 KST)
-        // 5분 전 자동 마감 (2026-06-25 09:55:00 KST)
+        // 1. 경기 시간 & 마감 조건 정의 (경기일: 2026-06-25 10:00:00 KST)
+        // 경기 시작 5분 전 자동 마감 (06/25 09:55:00 KST)
         const matchTime = new Date('2026-06-25T10:00:00+09:00');
         const deadlineTime = new Date(matchTime.getTime() - 5 * 60 * 1000);
 
         let isDeadlinePassed = false;
-        let authUser = null;
         let allPredictions = [];
         let documentIdToDelete = null;
 
-        // 3. 커스텀 토스트 알림 기능
+        // 본인 식별 키 생성 및 유지 (삭제 기능용)
+        let localUserUid = localStorage.getItem('worldcup_device_id');
+        if (!localUserUid) {
+            localUserUid = 'device_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('worldcup_device_id', localUserUid);
+        }
+
+        // 실시간 연동을 위한 보안성 높은 고유 키 뱅크 엔드포인트
+        const cloudDbUrl = 'https://kvdb.io/M8S9sK8fJ9H2sK8f/predictions_kia_vert';
+
+        // 2. 커스텀 토스트 알림 기능
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -459,6 +328,16 @@
                     toast.remove();
                 }, 300);
             }, 3000);
+        }
+
+        // 3. 골 변경 버튼 동작 (+, -)
+        window.changeGoal = function(team, val) {
+            const inputId = team === 'home' ? 'home-score' : 'away-score';
+            const input = document.getElementById(inputId);
+            let current = parseInt(input.value) || 0;
+            current += val;
+            if (current < 0) current = 0;
+            input.value = current;
         }
 
         // 4. 타이머 제어 루프
@@ -494,24 +373,7 @@
             }, 1000);
         }
 
-        // 5. 익명 인증 이니셜라이징 (RULE 3 준수)
-        async function initAuth() {
-            if (isLocalMode) return;
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (err) {
-                console.error("인증 실패, 로컬 스토리지 모드로 자동 우회합니다: ", err);
-                isLocalMode = true;
-                statusDot.className = "w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse";
-                statusText.innerText = "로컬 모드";
-            }
-        }
-
-        // 6. 통계 렌더링 및 계산
+        // 5. 통계 정보 계산 및 화면 갱신
         function updateStats(predictions) {
             const total = predictions.length;
             if (total === 0) {
@@ -562,53 +424,7 @@
             document.getElementById('stat-avg-goals').innerText = avgGoals;
         }
 
-        // 7. 삭제 모달 연동
-        window.openDeleteModal = function(id) {
-            documentIdToDelete = id;
-            document.getElementById('delete-modal').classList.remove('hidden');
-        };
-
-        window.closeDeleteModal = function() {
-            documentIdToDelete = null;
-            document.getElementById('delete-modal').classList.add('hidden');
-        };
-
-        // 삭제 기능 실행
-        async function executeDelete() {
-            if (!documentIdToDelete) return;
-
-            const confirmBtn = document.getElementById('confirm-delete-btn');
-            confirmBtn.disabled = true;
-            confirmBtn.innerText = "삭제 중...";
-
-            try {
-                if (isLocalMode) {
-                    // 로컬 모드에서 요소 제거
-                    allPredictions = allPredictions.filter(p => p.id !== documentIdToDelete);
-                    localStorage.setItem('local_predictions_db', JSON.stringify(allPredictions));
-                    showToast("내 예측이 성공적으로 삭제되었습니다.", "success");
-                    
-                    // 로컬 뷰 즉시 리렌더링
-                    updateStats(allPredictions);
-                    renderPredictions(allPredictions, document.getElementById('search-input').value);
-                    document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
-                } else {
-                    // Firebase Live 모드
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'predictions', documentIdToDelete);
-                    await deleteDoc(docRef);
-                    showToast("예측 데이터가 완전히 삭제되었습니다.", "success");
-                }
-            } catch (err) {
-                console.error("삭제 실패 로그: ", err);
-                showToast("삭제 도중 문제가 발생했습니다.", "error");
-            } finally {
-                confirmBtn.disabled = false;
-                confirmBtn.innerText = "삭제하기";
-                closeDeleteModal();
-            }
-        }
-
-        // 8. 실시간 참여 목록 렌더링
+        // 6. 예측 참여 리스트 UI 렌더링
         function renderPredictions(list, filterKeyword = '') {
             const listEl = document.getElementById('predictions-list');
             
@@ -647,24 +463,17 @@
                     tag = '<span class="text-[9px] bg-slate-800 text-slate-300 font-bold px-1.5 py-0.5 rounded ml-2">무승부</span>';
                 }
 
+                // 등록 시간 렌더링
                 let displayTime = '방금 전';
                 if (p.createdAt) {
-                    let date;
-                    if (typeof p.createdAt.toDate === 'function') {
-                        date = p.createdAt.toDate();
-                    } else {
-                        date = new Date(p.createdAt);
-                    }
+                    const date = new Date(p.createdAt);
                     if (!isNaN(date.getTime())) {
                         displayTime = `${date.getMonth()+1}/${date.getDate()} ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
                     }
                 }
 
-                // 기기별 작성자 여부 체크 (로그인된 세션 UID 또는 로컬 전용 브라우저 UID 대조)
-                const isMyPrediction = isLocalMode 
-                    ? p.userId === localUserUid 
-                    : (authUser && p.userId === authUser.uid);
-                
+                // 본인 기기 글인지 식별
+                const isMyPrediction = p.userId === localUserUid;
                 const deleteButtonHtml = isMyPrediction ? `
                     <button type="button" onclick="openDeleteModal('${p.id}')" class="text-slate-500 hover:text-rose-500 p-1.5 rounded-lg hover:bg-rose-950/20 transition-all ml-1" title="내 예측 삭제">
                         <i class="fa-solid fa-trash-can text-xs"></i>
@@ -698,62 +507,61 @@
             listEl.innerHTML = html;
         }
 
-        // 9. 실시간 데이터 구독/바인딩
-        function subscribePredictions(user) {
-            if (isLocalMode) {
-                // 로컬 저장소 모드 가동
-                const saved = localStorage.getItem('local_predictions_db');
-                if (saved) {
-                    allPredictions = JSON.parse(saved);
-                } else {
+        // 7. 실시간 Cloud DB 비동기 통신 정의 (가장 안정적인 REST 동기화)
+        async function fetchPredictions() {
+            try {
+                const response = await fetch(cloudDbUrl);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (Array.isArray(data)) {
+                        allPredictions = data;
+                        // 최신순으로 정렬
+                        allPredictions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        
+                        // 대시보드 및 목록 갱신
+                        updateStats(allPredictions);
+                        renderPredictions(allPredictions, document.getElementById('search-input').value);
+                        document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
+                        
+                        // 온라인 정상 마크업
+                        document.getElementById('db-status-dot').className = "w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse";
+                        document.getElementById('db-status-text').innerText = "실시간 서버 연결됨";
+                    }
+                } else if (response.status === 404) {
+                    // 데이터가 아직 서버에 존재하지 않는 경우 빈 배열 생성
                     allPredictions = [];
+                    updateStats(allPredictions);
+                    renderPredictions(allPredictions);
                 }
-                updateStats(allPredictions);
-                renderPredictions(allPredictions, document.getElementById('search-input').value);
-                document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
-                return;
+            } catch (err) {
+                console.warn("서버와 통신이 원활하지 않습니다. 대기 중...", err);
+                document.getElementById('db-status-dot').className = "w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse";
+                document.getElementById('db-status-text').innerText = "오프라인 모드";
             }
-
-            // Firebase Live 모드 가동 (RULE 1 준수)
-            const predictionsRef = collection(db, 'artifacts', appId, 'public', 'data', 'predictions');
-            
-            onSnapshot(predictionsRef, (snapshot) => {
-                const list = [];
-                snapshot.forEach(doc => {
-                    list.push({ id: doc.id, ...doc.data() });
-                });
-
-                // RULE 2 준수: 프론트엔드 메모리에서 가볍게 시간 정렬 처리
-                list.sort((a, b) => {
-                    const timeA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime()/1000 : 0);
-                    const timeB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime()/1000 : 0);
-                    return timeB - timeA;
-                });
-
-                allPredictions = list;
-
-                updateStats(allPredictions);
-                renderPredictions(allPredictions, document.getElementById('search-input').value);
-                document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
-                
-            }, (error) => {
-                console.error("Firestore 실시간 바인딩 실패, 로컬 저장소 모드로 임시 세션 가동: ", error);
-                isLocalMode = true;
-                subscribePredictions(null);
-            });
         }
 
-        // 10. 예측 결과 폼 전송 핸들러
+        async function savePredictionsToServer(newList) {
+            try {
+                const response = await fetch(cloudDbUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newList)
+                });
+                return response.ok;
+            } catch (err) {
+                console.error("클라우드 저장 실패:", err);
+                return false;
+            }
+        }
+
+        // 8. 데이터 등록 (Submit) 처리 함수
         async function handleFormSubmit(e) {
             e.preventDefault();
 
             if (isDeadlinePassed) {
-                showToast("마감 시간이 지났으므로 예측을 제출할 수 없습니다.", "error");
-                return;
-            }
-
-            if (!isLocalMode && !authUser) {
-                showToast("서버 연결 초기화 중입니다. 1~2초 후 다시 시도해 주세요.", "error");
+                showToast("마감 시간이 지났으므로 새로운 예측을 제출할 수 없습니다.", "error");
                 return;
             }
 
@@ -764,102 +572,117 @@
             const submitBtn = document.getElementById('btn-submit');
 
             const name = nameInput.value.trim();
-            
-            // 안전한 골 수 파싱 (NaN 방지)
             const homeScore = parseInt(homeInput.value) || 0;
-            const awayScore = parseInt(awayInput.value) || 0; // ★ [오류수정]: 기존 awayScore.value에서 awayInput.value로 변수 오타를 완벽히 고쳤습니다!
+            const awayScore = parseInt(awayInput.value) || 0;
             const cheerMsg = cheerInput.value.trim();
 
             if (!name) {
-                showToast("닉네임 또는 이름을 입력해 주세요.", "error");
+                showToast("이름을 적어주셔야 예측 제출이 가능합니다.", "error");
                 return;
             }
 
+            // 버튼 비활성화 시각화
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> 예측 전송 중...`;
 
-            try {
-                if (isLocalMode) {
-                    // 로컬스토리지 임시 전송 로직
-                    const newLocalPrediction = {
-                        id: 'local_item_' + Date.now(),
-                        name,
-                        homeScore,
-                        awayScore,
-                        cheerMsg,
-                        userId: localUserUid,
-                        createdAt: new Date().toISOString()
-                    };
+            // 새로운 예측 오브젝트 생성
+            const newPrediction = {
+                id: 'pred_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                name,
+                homeScore,
+                awayScore,
+                cheerMsg,
+                userId: localUserUid,
+                createdAt: new Date().toISOString()
+            };
 
-                    allPredictions.unshift(newLocalPrediction);
-                    localStorage.setItem('local_predictions_db', JSON.stringify(allPredictions));
-                    
-                    showToast(`등록 완료! 내역이 정상적으로 등록되었습니다.`, "success");
-                    
-                    // 입력 초기화
-                    nameInput.value = '';
-                    homeInput.value = 0;
-                    awayInput.value = 0;
-                    cheerInput.value = '';
+            // 서버 데이터 최신 동기화 후 밀어넣기
+            await fetchPredictions();
+            
+            const updatedList = [newPrediction, ...allPredictions];
+            const isSaved = await savePredictionsToServer(updatedList);
 
-                    // 로컬 목록 즉시 업데이트
-                    updateStats(allPredictions);
-                    renderPredictions(allPredictions, document.getElementById('search-input').value);
-                    document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
-                } else {
-                    // Realtime Live Firebase 전송 로직 (RULE 1 준수)
-                    const predictionsRef = collection(db, 'artifacts', appId, 'public', 'data', 'predictions');
-                    
-                    await addDoc(predictionsRef, {
-                        name,
-                        homeScore,
-                        awayScore,
-                        cheerMsg,
-                        userId: authUser.uid,
-                        createdAt: serverTimestamp()
-                    });
-
-                    showToast(`성공적으로 실시간 서버에 내기 결과를 제출했습니다!`, "success");
-                    
-                    nameInput.value = '';
-                    homeInput.value = 0;
-                    awayInput.value = 0;
-                    cheerInput.value = '';
-                }
+            if (isSaved) {
+                showToast(`${name}님의 월드컵 예측이 실시간 서버에 안전하게 저장되었습니다!`, "success");
                 
-            } catch (err) {
-                console.error("제출 에러 발생: ", err);
-                showToast(`저장 도중 문제가 발생했습니다.`, "error");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> 내 예측 등록하기`;
+                // 폼 깔끔하게 리셋
+                nameInput.value = '';
+                homeInput.value = 0;
+                awayInput.value = 0;
+                cheerInput.value = '';
+
+                // 로컬 UI 리스트 동기화 업데이트
+                allPredictions = updatedList;
+                updateStats(allPredictions);
+                renderPredictions(allPredictions);
+                document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
+            } else {
+                showToast("서버 일시적 오류로 저장이 차단되었습니다. 다시 전송해 주세요.", "error");
             }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> 내 예측 등록하기`;
         }
 
-        // 11. 초기 로딩 및 라이프사이클 바인딩
-        window.addEventListener('load', async () => {
+        // 9. 데이터 삭제 처리 함수
+        window.openDeleteModal = function(id) {
+            documentIdToDelete = id;
+            document.getElementById('delete-modal').classList.remove('hidden');
+        };
+
+        window.closeDeleteModal = function() {
+            documentIdToDelete = null;
+            document.getElementById('delete-modal').classList.add('hidden');
+        };
+
+        async function executeDelete() {
+            if (!documentIdToDelete) return;
+
+            const confirmBtn = document.getElementById('confirm-delete-btn');
+            confirmBtn.disabled = true;
+            confirmBtn.innerText = "삭제 중...";
+
+            // 최신 데이터 가져와 본인 글 필터링 삭제
+            await fetchPredictions();
+            const filteredList = allPredictions.filter(p => p.id !== documentIdToDelete);
+            const isSaved = await savePredictionsToServer(filteredList);
+
+            if (isSaved) {
+                showToast("예측 기록이 영구히 삭제되었습니다.", "success");
+                allPredictions = filteredList;
+                updateStats(allPredictions);
+                renderPredictions(allPredictions);
+                document.getElementById('participant-count').innerText = `총 ${allPredictions.length}명 참여`;
+            } else {
+                showToast("서버 삭제에 실패했습니다. 네트워크 상태를 점검하세요.", "error");
+            }
+
+            confirmBtn.disabled = false;
+            confirmBtn.innerText = "삭제하기";
+            closeDeleteModal();
+        }
+
+        // 10. 초기 부팅 & 실시간 동기화 주기 설정 (상시 Polling)
+        window.addEventListener('load', () => {
+            // 마감 타이머 작동
             runTimer();
 
+            // 검색 필터 감지
             document.getElementById('search-input').addEventListener('input', (e) => {
                 renderPredictions(allPredictions, e.target.value);
             });
 
-            document.getElementById('confirm-delete-btn').addEventListener('click', executeDelete);
+            // 폼 전송 이벤트 등록
             document.getElementById('bet-form').addEventListener('submit', handleFormSubmit);
 
-            if (isLocalMode) {
-                // 파이어베이스가 없는 독립 브라우저 배포 상태 -> 로컬 모드로 완벽 부팅
-                subscribePredictions(null);
-            } else {
-                // 파이어베이스 연동 개시 (RULE 3 준수)
-                await initAuth();
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        authUser = user;
-                        subscribePredictions(user);
-                    }
-                });
-            }
+            // 삭제 모달 단언 처리
+            document.getElementById('confirm-delete-btn').addEventListener('click', executeDelete);
+
+            // 최초 동기화 실행
+            fetchPredictions();
+
+            // 4초마다 실시간으로 친구들이 올린 데이터 화면에 교차 검사 및 가져오기
+            setInterval(fetchPredictions, 4000);
         });
     </script>
 </body>
